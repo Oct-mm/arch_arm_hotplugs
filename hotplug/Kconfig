@@ -1,0 +1,55 @@
+config MSM_HOTPLUG
+	bool "MSM hotplug driver"
+	depends on HOTPLUG_CPU
+	default n
+	help
+	  The MSM hotplug driver controls on-/offlining of additional cores based
+	  on current cpu load.
+
+config BRICKED_HOTPLUG
+	bool "Enable kernel based mpdecision"
+	depends on MSM_RUN_QUEUE_STATS
+	default n
+	help
+	  This enables kernel based multi core control.
+	  (up/down hotplug based on load)
+
+config ZEN_DECISION
+ 	bool "Zen Decision MPDecision Replacement"
+ 	depends on SMP && FB
+ 	default n
+	help
+ 	  MPDecision is a userspace service that does several functions
+ 	  related to CPU Frequency and CPU Hotplugging. Some of these are:
+ 	  - Remove cores when screen goes off
+ 	  - Enable cores when screen goes on
+ 	  - Raise CPU_MIN_FREQ to a fixed value for a few seconds on input
+   
+ 	  Zen Decision allows some of the MPDecison functions to be delegated
+ 	  to the kernel. Right now these are
+ 	  - Remove cores when screen goes off (after a configurable amount of time)
+ 	  - Enable cores when screen comes on (immediately)
+ 
+ 	  Zen Decision assumes the input boost function of MPDecision should be
+ 	  delegated to somewhere else in the kernel (Such as in CPU-BOOST)
+ 
+ 	  Enable this if you'd like the ability to disable MPDecision.
+	  
+config MAKO_HOTPLUG
+        bool "Enable mako-hotplug cpu hotplug driver"
+        default n
+        help
+          Generic Intelli-plug cpu hotplug driver for ARM SOCs	  
+	    
+config FAST_HOTPLUG
+	bool "Enable fast hotplug"
+	default n
+	help
+	  Kernel based core control.
+	  
+config THUNDERPLUG_CONTROL
+      bool "Enable plugging down/up of cores using powersuspend"
+      default n
+      help
+       This driver uses powersuspend to take down the cpu cores
+       on a octa core device. Tuned to work on a quad core device.
